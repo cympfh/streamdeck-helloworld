@@ -1,9 +1,9 @@
 {
   "Description": "Use this to create your own plugin",
-  "Name": "Yet Another Alarm",
+  "Name": "Hello, World",
   "Category": "Templates",
   "cc.cympfh.helloworld.action": {
-    "Name": "Action",
+    "Name": "Hello, World",
     "Tooltip": "This is the only action in this plugin"
   },
   "Localization": {

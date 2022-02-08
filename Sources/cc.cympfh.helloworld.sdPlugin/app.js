@@ -37,7 +37,7 @@ const action = {
         console.log('%c%s', 'color: white; background: red; font-size: 15px;', '[app.js]onDidReceiveSettings:');
 
         this.settings = Utils.getProp(jsn, 'payload.settings', {});
-        this.doSomeThing(this.settings, 'onDidReceiveSettings', 'orange');
+        this.debug(this.settings, 'onDidReceiveSettings', 'orange');
 
         /**
          * In this example we put a HTML-input element with id='mynameinput'
@@ -50,6 +50,14 @@ const action = {
 
          this.setTitle(jsn);
     },
+
+    /**
+     * settings.state
+     *
+     * 0: HELLO, Waiting KeyDown
+     * 1: WORLD, While KeyDown
+     * 2: !, Sleep 2sec
+     */
 
     /**
      * The 'willAppear' event is the first event a key will receive, right before it gets
@@ -70,28 +78,28 @@ const action = {
          * $SD.api.getSettings(jsn.context);
         */
         this.settings = jsn.payload.settings;
-
-        // Nothing in the settings pre-fill, just something for demonstration purposes
-        if (!this.settings || Object.keys(this.settings).length === 0) {
-            this.settings.mynameinput = 'HELLO';
-        }
+        this.settings.state = 0;
         this.setTitle(jsn);
     },
 
     onKeyDown: function(jsn) {
-        this.doSomeThing(jsn, 'onKeyDown', 'blue');
-        this.settings.mynameinput = 'WORLD';
+        this.debug(jsn, 'onKeyDown', 'blue');
+        if (this.settings.state === 0) {
+          this.settings.state = 1;
+        }
         this.setTitle(jsn);
     },
 
     onKeyUp: function(jsn) {
-        this.doSomeThing(jsn, 'onKeyUp', 'green');
-        this.settings.mynameinput = '!';
-        setTimeout(() => {
-          this.settings.mynameinput = 'HELLO';
-          this.setTitle(jsn);
-        }, 2000);
-        this.setTitle(jsn);
+        this.debug(jsn, 'onKeyUp', 'green');
+        if (this.settings.state === 1) {
+            this.settings.state = 2;
+            setTimeout(() => {
+                this.settings.state = 0;
+                this.setTitle(jsn);
+            }, 800);
+            this.setTitle(jsn);
+        }
     },
 
     onSendToPlugin: function(jsn) {
@@ -103,7 +111,7 @@ const action = {
 
         const sdpi_collection = Utils.getProp(jsn, 'payload.sdpi_collection', {});
         if (sdpi_collection.value && sdpi_collection.value !== undefined) {
-            this.doSomeThing({ [sdpi_collection.key] : sdpi_collection.value }, 'onSendToPlugin', 'fuchsia');
+            this.debug({ [sdpi_collection.key] : sdpi_collection.value }, 'onSendToPlugin', 'fuchsia');
         }
     },
 
@@ -134,9 +142,15 @@ const action = {
      */
 
     setTitle: function(jsn) {
-        if (this.settings && this.settings.hasOwnProperty('mynameinput')) {
-            console.log("watch the key on your StreamDeck - it got a new title...", this.settings.mynameinput);
-            $SD.api.setTitle(jsn.context, this.settings.mynameinput);
+        console.log("Current state is", this.settings.state);
+        if (this.settings.state === 0) {
+            $SD.api.setTitle(jsn.context, 'Hello');
+        } else if (this.settings.state === 1) {
+            $SD.api.setTitle(jsn.context, 'World');
+        } else if (this.settings.state === 2) {
+            $SD.api.setTitle(jsn.context, '!');
+        } else {
+            $SD.api.setTitle(jsn.context, '?');
         }
     },
 
@@ -146,8 +160,8 @@ const action = {
      * from Stream Deck.
      */
 
-    doSomeThing: function(inJsonData, caller, tagColor) {
-        console.log('%c%s', `color: white; background: ${tagColor || 'grey'}; font-size: 15px;`, `[app.js]doSomeThing from: ${caller}`);
+    debug: function(inJsonData, caller, tagColor) {
+        console.log('%c%s', `color: white; background: ${tagColor || 'grey'}; font-size: 15px;`, `[app.js] from: ${caller}`);
         // console.log(inJsonData);
     },
 

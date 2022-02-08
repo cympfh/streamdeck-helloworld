@@ -1,9 +1,9 @@
 {
   "Description": "해당 템플릿을 사용하여 원하는 플러그인을 개발해보세요.",
-  "Name": "Yet Another Alarm",
+  "Name": "Hello, World",
   "Category": "Templates",
   "cc.cympfh.helloworld.action": {
-    "Name": "Action",
+    "Name": "Hello, World",
     "Tooltip": "해당 플러그인의 액션입니다."
   },
   "Localization": {

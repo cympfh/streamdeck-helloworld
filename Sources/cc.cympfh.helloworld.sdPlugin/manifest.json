@@ -2,13 +2,13 @@
   "Actions": [
     {
       "Icon": "action/images/actionimage",
-      "Name": "Yet Another Alarm",
+      "Name": "Hello, World!",
       "States": [
         {
           "Image": "action/images/action"
         }
       ],
-      "Tooltip": "This is an example tooltip",
+      "Tooltip": "Hello, World!",
       "UUID": "cc.cympfh.helloworld.action"
     }
   ],
@@ -17,10 +17,10 @@
   "CodePath": "index.html",
   "PropertyInspectorPath": "propertyinspector/index.html",
   "Description": "Example description",
-  "Name": "Yet Another Alarm",
+  "Name": "Hello, World",
   "Icon": "action/images/action",
-  "URL": "https://www.elgato.com/en/gaming/stream-deck",
-  "Version": "1.0.1",
+  "URL": "https://github.com/cympfh/streamdeck-helloworld",
+  "Version": "1.0.2",
   "OS": [
     {
         "Platform": "mac",

@@ -1,9 +1,9 @@
 {
   "Description": "Nimm diese Vorlage für dein erstes Plugin",
-  "Name": "Yet Another Alarm",
+  "Name": "Hello, World",
   "Category": "Templates",
   "cc.cympfh.helloworld.action": {
-    "Name": "Action",
+    "Name": "Hello, World",
     "Tooltip": "Dies ist die einzige 'Action' in diesem Template"
   },
   "Localization": {
